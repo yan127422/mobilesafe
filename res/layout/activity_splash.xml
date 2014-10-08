@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/rl_root"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:background="@drawable/logo_splash_share"
@@ -19,5 +20,14 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="150dp"
             />
+    <TextView android:id="@+id/tv_splash_progress"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="20sp"
+              android:textColor="#000"
+              android:layout_alignParentBottom="true"
+              android:layout_alignParentLeft="true"
+            />
+
 </RelativeLayout>
 
