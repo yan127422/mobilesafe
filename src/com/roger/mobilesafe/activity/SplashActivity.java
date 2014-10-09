@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.roger.mobilesafe.R;
+import com.roger.mobilesafe.utils.MyConstants;
 import com.roger.mobilesafe.utils.StreamTools;
 import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
@@ -42,6 +44,7 @@ public class SplashActivity extends Activity {
     private String version;
     private String description;
     private String apkurl;
+    private SharedPreferences config;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,7 +54,15 @@ public class SplashActivity extends Activity {
         tv_progress = (TextView) findViewById(R.id.tv_splash_progress);
         tv_version.setText("版本"+getVersionName());
         rl_root = findViewById(R.id.rl_root);
-        checkUpdate();
+        config = getSharedPreferences("config",MODE_PRIVATE);
+        boolean isAutoUpdate = config.getBoolean(MyConstants.IS_AUTO_UPDATE,false);
+        if(isAutoUpdate) {
+            checkUpdate();
+        }else{
+            Message message = new Message();
+            message.what = ENTER_HOME;
+            handler.sendMessageDelayed(message,2000);
+        }
         AlphaAnimation animation = new AlphaAnimation(0.2f,1.0f);
         animation.setDuration(1000);
         rl_root.setAnimation(animation);
@@ -71,13 +82,16 @@ public class SplashActivity extends Activity {
                     enterHome();
                     break;
                 case URL_ERROR:
-                    Log.e(TAG, "URL错误");
+                    Toast.makeText(getApplicationContext(), "URL错误",Toast.LENGTH_SHORT).show();
+                    enterHome();
                     break;
                 case NETWORK_ERROR:
-                    Log.e(TAG, "网络异常");
+                    Toast.makeText(getApplicationContext(),"网络异常",Toast.LENGTH_SHORT).show();
+                    enterHome();
                     break;
                 case JSON_ERROR:
-                    Log.e(TAG,"JSON解析错误");
+                    Toast.makeText(getApplicationContext(),"JSON解析错误",Toast.LENGTH_SHORT).show();
+                    enterHome();
                     break;
             }
         }
