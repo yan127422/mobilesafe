@@ -4,9 +4,26 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="#FFF"
+              android:background="@drawable/background1"
+              android:paddingTop="10dp"
+
         >
-<TextView android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-        android:text="主页面"/>
+    <com.roger.mobilesafe.ui.FocusedTextView
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:singleLine="true"
+              android:ellipsize="marquee"
+              android:background="#4CCC"
+              android:text="欢迎使用手机卫士，呵呵欢迎使用手机卫士,有惊喜等待着您哦！！！！"
+              android:textSize="18sp"
+              android:textColor="#000"
+            />
+    <GridView
+            android:id="@+id/gv_home_gridview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:numColumns="2"
+            android:layout_marginTop="20dp"
+            android:verticalSpacing="15dip" />
+
 </LinearLayout>
