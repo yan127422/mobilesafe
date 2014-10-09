@@ -15,6 +15,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="afinal_0.5_bin" level="project" />
   </component>
 </module>
 
