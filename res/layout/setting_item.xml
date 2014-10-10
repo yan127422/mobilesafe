@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:background="@drawable/item_gray"
+              android:layout_width="match_parent"
+              android:layout_height="60dp">
+    <TextView style="@style/settingTextView"
+              android:id="@+id/tv_item_name"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="设置是否自动更新"
+              android:layout_centerVertical="true"
+              android:layout_marginLeft="10dp"
+            />
+    <com.roger.mobilesafe.ui.SwitchButton
+            android:id="@+id/sb_item_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            />
+    <View android:layout_width="fill_parent"
+          android:layout_height="1dp"
+          android:background="#ccc"
+          android:layout_alignParentBottom="true"
+          android:layout_marginLeft="8dp"
+          android:layout_marginRight="8dp"
+            />
+</RelativeLayout>
