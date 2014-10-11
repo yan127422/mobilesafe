@@ -4,7 +4,7 @@
               android:background="#fff"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <TextView style="@style/activityTitle"
+    <TextView style="@style/mainTitle"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:text="设置中心"

@@ -2,4 +2,5 @@
 <resources>
    <color name="lightGray">#4ccc</color>
    <color name="clear">#0000</color>
+   <color name="blue">#275CAE</color>
 </resources>
