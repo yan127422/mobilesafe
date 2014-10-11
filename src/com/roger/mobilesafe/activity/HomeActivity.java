@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.roger.mobilesafe.R;
+import com.roger.mobilesafe.utils.MD5;
 import com.roger.mobilesafe.utils.MyConstants;
 
 /**
@@ -101,7 +102,7 @@ public class HomeActivity extends Activity{
                     return;
                 }
                 SharedPreferences.Editor editor = config.edit();
-                editor.putString(MyConstants.SETUP_PWD,password);
+                editor.putString(MyConstants.SETUP_PWD, MD5.encode(password));
                 editor.commit();
                 dialog.dismiss();
                 //进入手机防盗界面
@@ -138,17 +139,17 @@ public class HomeActivity extends Activity{
             public void onClick(View v) {
                 //取出密码
                 String password = et_password.getText().toString().trim();
-                if(TextUtils.isEmpty(password)){
-                    Toast.makeText(getApplicationContext(),"密码不能为空",Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(password)) {
+                    Toast.makeText(getApplicationContext(), "密码不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(password.equals(config.getString(MyConstants.SETUP_PWD,""))){
+                if (MD5.encode(password).equals(config.getString(MyConstants.SETUP_PWD, ""))) {
                     //进入手机防盗界面
-                    Log.i(TAG,"进入手机防盗界面");
+                    Log.i(TAG, "进入手机防盗界面");
                     dialog.dismiss();
                     enterLostFindActivity();
-                }else{
-                    Toast.makeText(getApplicationContext(),"密码错误",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "密码错误", Toast.LENGTH_SHORT).show();
                 }
             }
         });
