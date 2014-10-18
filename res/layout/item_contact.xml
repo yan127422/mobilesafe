@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:background="@drawable/item_gray"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingLeft="5dp"
+              android:paddingTop="5dp"
+        >
+    <TextView android:id="@+id/et_item_name"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="姓名"
+              android:textSize="18sp"
+              android:textColor="#000"
+            />
+
+    <TextView android:id="@+id/et_item_phone"
+              android:drawableLeft="@android:drawable/stat_sys_phone_call_forward"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="手机号码"
+              android:textSize="18sp"
+              android:layout_marginTop="4dp"
+              android:textColor="#000"
+            />
+    <View android:layout_width="match_parent"
+          android:layout_height="0.4dp"
+          android:layout_marginTop="3dp"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:background="#ccc"
+            />
+
+</LinearLayout>

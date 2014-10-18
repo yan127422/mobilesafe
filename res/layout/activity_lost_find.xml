@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:background="#fff"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <TextView style="@style/mainTitle"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="手机防盗"
+            />
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+        <TextView style="@style/text_content_style1"
+                  android:text="安全号码"
+                />
+        <TextView style="@style/text_content_style1"
+                  android:id="@+id/tv_lostFind_number"
+                  android:text="18139218341"
+                  android:layout_alignParentRight="true"
+                  android:layout_marginRight="5dp"
+                />
+    </RelativeLayout>
+    <View android:layout_width="match_parent"
+          android:layout_height="0.5dp"
+          android:background="#ccc"
+          android:layout_marginTop="5dp"
+          />
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+            >
+        <TextView style="@style/text_content_style1"
+                  android:text="防盗保护是否开启"
+                />
+        <ImageView android:onClick="switchOpen"
+                   android:id="@+id/iv_lostFind_lock"
+                   android:layout_width="30dp"
+                   android:layout_height="30dp"
+                   android:src="@drawable/unlock"
+                   android:layout_alignParentRight="true"
+                   android:layout_marginRight="5dp"
+                />
+    </RelativeLayout>
+    <View android:layout_width="match_parent"
+          android:layout_height="0.5dp"
+          android:background="#ccc"
+          android:layout_marginTop="5dp"
+            />
+    <TextView style="@style/text_content_style1"
+              android:id="@+id/tv_lostFind_enterSetup"
+              android:background="@drawable/item_gray"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="重新进入设置向导"
+              android:drawableRight="@drawable/widget_right_icon"
+              android:paddingRight="5dp"
+            />
+    <View android:layout_width="match_parent"
+          android:layout_height="0.5dp"
+          android:background="#ccc"
+          android:layout_marginTop="5dp"
+            />
+    <TextView style="@style/text_content_style1"
+              android:layout_width="match_parent"
+              android:text="功能简介"
+              android:background="#ccc"
+              android:layout_marginLeft="5dp"
+              android:layout_marginRight="5dp"
+            />
+    <TextView style="@style/text_content_style1"
+              android:text=" GPS追踪#*location*#"
+              android:drawableLeft="@drawable/toast_icon"
+            />
+    <TextView style="@style/text_content_style1"
+              android:text=" 播放报警音乐#*alarm*#"
+              android:drawableLeft="@drawable/toast_icon"
+            />
+    <TextView style="@style/text_content_style1"
+              android:text=" 远程删除数据#*wipedata*#"
+              android:drawableLeft="@drawable/toast_icon"
+            />
+    <TextView style="@style/text_content_style1"
+              android:text=" 远程锁屏#*lockscreen*#"
+              android:drawableLeft="@drawable/toast_icon"
+            />
+</LinearLayout>

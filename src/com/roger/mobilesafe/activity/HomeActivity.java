@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -52,6 +53,8 @@ public class HomeActivity extends Activity{
                         break;
                     case 0://手机防盗
                         showLostFindDialog();
+                        break;
+                    case 1:
                         break;
                 }
             }
@@ -115,7 +118,8 @@ public class HomeActivity extends Activity{
     }
 
     private void enterLostFindActivity() {
-
+        Intent intent = new Intent(this,LostFindActivity.class);
+        startActivity(intent);
     }
 
     /**
