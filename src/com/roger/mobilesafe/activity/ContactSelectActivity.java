@@ -56,6 +56,7 @@ public class ContactSelectActivity extends Activity{
         while(cursor.moveToNext()){
             Map<String,String>map = new HashMap<String, String>();
             String contactId = cursor.getString(0);
+            if(contactId==null)continue;
             Cursor dataCursor = resolver.query(dataUri,
                     new String[]{"mimetype", "data1"},
                     "contact_id = ?",new String[]{contactId},null);

@@ -1,13 +1,15 @@
 package com.roger.mobilesafe.receiver;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
+import android.app.admin.DevicePolicyManager;
+import android.content.*;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
+import android.text.TextUtils;
 import android.util.Log;
 import com.roger.mobilesafe.R;
+import com.roger.mobilesafe.service.GpsService;
 import com.roger.mobilesafe.utils.MyConstants;
 
 /**
@@ -15,10 +17,13 @@ import com.roger.mobilesafe.utils.MyConstants;
  */
 public class SmsReceiver extends BroadcastReceiver{
     private static final String TAG = "SmsReceiver";
-
+    private SharedPreferences preferences;
+    private DevicePolicyManager dpm;
     @Override
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
+        preferences = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+        dpm = (DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
         Object messages[] = (Object[]) bundle.get("pdus");
         for(Object o:messages){
             SmsMessage sms = SmsMessage.createFromPdu((byte[])o);
@@ -31,6 +36,14 @@ public class SmsReceiver extends BroadcastReceiver{
             if("#*location*#".equals(body)){
                 Log.i(TAG,"获取GPS数据");
                 //终止广播
+                Intent intent1 = new Intent(context, GpsService.class);
+                context.startService(intent1);
+                String location = preferences.getString(MyConstants.LOCATION,null);
+                if(TextUtils.isEmpty(location)){
+                    SmsManager.getDefault().sendTextMessage(sender,null,"get location...",null,null);
+                }else{
+                    SmsManager.getDefault().sendTextMessage(sender,null,location,null,null);
+                }
                 abortBroadcast();
             }else if("#*alarm*#".equals(body)){
                 Log.i(TAG,"播放报警音乐");
@@ -41,11 +54,24 @@ public class SmsReceiver extends BroadcastReceiver{
                 abortBroadcast();
             }else if("#*wipedata*#".equals(body)){
                 Log.i(TAG,"清除数据");
+                if(isAdmin(context)){
+                    dpm.wipeData(DevicePolicyManager.WIPE_EXTERNAL_STORAGE);
+                    dpm.wipeData(0);
+                }
                 abortBroadcast();
-            }else if("#*lockscreen*#".equals(body)){
+            }else if(body.startsWith("#*lockscreen*#")){
                 Log.i(TAG,"远程锁屏");
+                String password = body.replace("#*lockscreen*#","");
+                if(isAdmin(context)){
+                    dpm.lockNow();
+                    dpm.resetPassword(password,0);
+                }
                 abortBroadcast();
             }
         }
+    }
+    private boolean isAdmin(Context context){
+        ComponentName mDeviceAdmin = new ComponentName(context, MyAdminReceiver.class);
+        return dpm.isAdminActive(mDeviceAdmin);
     }
 }

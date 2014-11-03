@@ -23,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -56,6 +57,7 @@ public class SplashActivity extends Activity {
         rl_root = findViewById(R.id.rl_root);
         config = getSharedPreferences("config",MODE_PRIVATE);
         boolean isAutoUpdate = config.getBoolean(MyConstants.IS_AUTO_UPDATE,false);
+        copyDB();
         if(isAutoUpdate) {
             checkUpdate();
         }else{
@@ -66,6 +68,28 @@ public class SplashActivity extends Activity {
         AlphaAnimation animation = new AlphaAnimation(0.2f,1.0f);
         animation.setDuration(1000);
         rl_root.setAnimation(animation);
+    }
+
+    private void copyDB(){
+        try {
+            InputStream is = getAssets().open("address.db");
+            File file = new File(getFilesDir(),"address.db");
+            if(file.exists()&&file.length()>0){
+                Log.i(TAG,"文件已存在");
+                return;
+            }
+            FileOutputStream fos = new FileOutputStream(file);
+            byte[]buffer = new byte[1024];
+            int len = 0;
+            while((len=is.read(buffer))!=-1){
+                fos.write(buffer,0,len);
+            }
+            is.close();
+            fos.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private Handler handler = new Handler(){
@@ -241,4 +265,6 @@ public class SplashActivity extends Activity {
         }
         return version;
     }
+
+
 }

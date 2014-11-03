@@ -13,4 +13,12 @@
             android:id="@+id/siv_setting_update"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"/>
+    <com.roger.mobilesafe.ui.SettingItemView
+            android:id="@+id/siv_setting_address"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+    <com.roger.mobilesafe.ui.SettingItemView
+            android:id="@+id/siv_setting_callSms"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
 </LinearLayout>

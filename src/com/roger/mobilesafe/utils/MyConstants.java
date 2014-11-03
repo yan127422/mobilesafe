@@ -10,4 +10,6 @@ public class MyConstants {
     public static final String IS_PROTECT = "isProtect";//是否防盗保护
     public static final String SAFE_NUMBER = "safeNumber";//安全号码
     public static final String SIM_SERIAL_NUMBER = "simSerialNumber";//手机Sim卡序列号
+    public static final String LOCATION = "location";
+    public static final String IS_SHOW_ADDRESS = "isShowAddress";//号码归属地开启
 }

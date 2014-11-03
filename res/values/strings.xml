@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">mobilesafe</string>
+    <string name="my_device_admin">我的设备管理器</string>
+    <string name="my_device_admin_description">激活设备管理器</string>
 </resources>

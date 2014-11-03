@@ -2,8 +2,13 @@ package com.roger.mobilesafe.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.text.TextUtils;
@@ -12,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.roger.mobilesafe.R;
+import com.roger.mobilesafe.receiver.MyAdminReceiver;
 import com.roger.mobilesafe.utils.MD5;
 import com.roger.mobilesafe.utils.MyConstants;
 
@@ -36,31 +42,59 @@ public class HomeActivity extends Activity{
                           R.drawable.toolbox_icon_shortcut
                          };
     private SharedPreferences config;
+    private DevicePolicyManager dpm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         config = getSharedPreferences("config",MODE_PRIVATE);
+         dpm = (DevicePolicyManager)getSystemService(DEVICE_POLICY_SERVICE);
         gridView = (GridView) findViewById(R.id.gv_home_gridview);
         gridView.setAdapter(new MyAdapter());
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = null;
                 switch (position){
                     case 8://设置中心
-                        Intent intent = new Intent(HomeActivity.this,SettingActivity.class);
+                        intent = new Intent(HomeActivity.this,SettingActivity.class);
                         startActivity(intent);
                         break;
                     case 0://手机防盗
                         showLostFindDialog();
                         break;
-                    case 1:
+                    case 1://通信卫士（黑名单）
+                        intent = new Intent(HomeActivity.this,CallSmsSafeActivity.class);
+                        startActivity(intent);
+                        break;
+                    case 7://高级工具
+                        intent = new Intent(HomeActivity.this,AtoolsActivity.class);
+                        startActivity(intent);
+                        break;
+                    case 2:
                         break;
                 }
             }
         });
+        if(!isAdmin()){//开启管理员权限
+            openAdmin();
+        }
     }
 
+    private boolean isAdmin(){
+        ComponentName mDeviceAdmin = new ComponentName(this, MyAdminReceiver.class);
+        return dpm.isAdminActive(mDeviceAdmin);
+    }
+    /**
+     * 开启设备管理器
+     */
+    private void openAdmin(){
+        Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+        ComponentName mDeviceAdmin = new ComponentName(this, MyAdminReceiver.class);
+        intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, mDeviceAdmin);
+        intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,"开启管理员权限");
+        startActivity(intent);
+    }
     /**
      * 手机防盗对话框
      */

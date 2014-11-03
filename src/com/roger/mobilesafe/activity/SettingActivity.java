@@ -1,18 +1,24 @@
 package com.roger.mobilesafe.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import com.roger.mobilesafe.R;
+import com.roger.mobilesafe.service.AddressService;
+import com.roger.mobilesafe.service.CallSmsSafeService;
 import com.roger.mobilesafe.ui.SettingItemView;
 import com.roger.mobilesafe.utils.MyConstants;
+import com.roger.mobilesafe.utils.ServiceUtils;
 
 /**
  * Created by Roger on 2014/10/9.
  */
 public class SettingActivity extends Activity{
-    private SettingItemView autoUpdate;
+    private static final String TAG = "SettingActivity";
+    private SettingItemView autoUpdate,addressQuery,callSms;
     private SharedPreferences config;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +27,10 @@ public class SettingActivity extends Activity{
         config = getSharedPreferences("config",MODE_PRIVATE);
         boolean isAuto = config.getBoolean(MyConstants.IS_AUTO_UPDATE,false);
         autoUpdate = (SettingItemView) findViewById(R.id.siv_setting_update);
+        addressQuery = (SettingItemView) findViewById(R.id.siv_setting_address);
+        callSms = (SettingItemView) findViewById(R.id.siv_setting_callSms);
+        addressQuery.setText("设置显示号码归属地");
+        callSms.setText("开启黑名单拦截");
         autoUpdate.setChecked(isAuto);
         autoUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,5 +42,44 @@ public class SettingActivity extends Activity{
                 editor.commit();
             }
         });
+        boolean isShowAddress = ServiceUtils.isServiceRunning(this,AddressService.class.getName());
+        addressQuery.setChecked(isShowAddress);
+        final Intent addressService = new Intent(SettingActivity.this, AddressService.class);
+        addressQuery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isChecked = !addressQuery.isChecked();
+                addressQuery.setChecked(isChecked);
+
+                if(isChecked){
+                    startService(addressService);
+                }else{
+                    stopService(addressService);
+                }
+            }
+        });
+
+        boolean isCallSmsRunning = ServiceUtils.isServiceRunning(this,CallSmsSafeService.class.getName());
+        callSms.setChecked(isCallSmsRunning);
+        final Intent callSmsService = new Intent(this,CallSmsSafeService.class);
+        callSms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isChecked = !callSms.isChecked();
+                callSms.setChecked(isChecked);
+                if(isChecked){
+                    startService(callSmsService);
+                }else{
+                    stopService(callSmsService);
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        boolean isShowAddress = ServiceUtils.isServiceRunning(this,AddressService.class.getName());
+        addressQuery.setChecked(isShowAddress);
     }
 }
