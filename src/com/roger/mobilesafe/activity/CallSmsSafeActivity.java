@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
@@ -18,6 +19,7 @@ import java.util.List;
  * Created by Roger on 2014/10/28.
  */
 public class CallSmsSafeActivity extends Activity{
+    private static final String TAG = "CallSmsSafeActivity";
     private ListView lv_blacklist;
     private List<BlacklistInfo> infos;
     private BlacklistDao dao;
@@ -35,6 +37,7 @@ public class CallSmsSafeActivity extends Activity{
         lv_blacklist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.i(TAG,"item click "+position);
                 showEditBlackView(position);
             }
         });
@@ -90,6 +93,7 @@ public class CallSmsSafeActivity extends Activity{
             }
         });
         dialog.setView(view,0,0,0,0);
+        dialog.show();
     }
 
     private class BlacklistAdapter extends BaseAdapter{

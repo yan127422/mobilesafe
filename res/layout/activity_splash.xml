@@ -3,7 +3,7 @@
               android:id="@+id/rl_root"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:background="@drawable/logo_splash_share"
+              android:background="@drawable/background1"
         >
     <TextView
             android:id="@+id/tv_splash_version"

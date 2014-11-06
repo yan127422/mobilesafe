@@ -12,4 +12,5 @@ public class MyConstants {
     public static final String SIM_SERIAL_NUMBER = "simSerialNumber";//手机Sim卡序列号
     public static final String LOCATION = "location";
     public static final String IS_SHOW_ADDRESS = "isShowAddress";//号码归属地开启
+    public static final String IS_SHORTCUT_CREATED = "isShortcutCreated";//快捷方式是否创建
 }

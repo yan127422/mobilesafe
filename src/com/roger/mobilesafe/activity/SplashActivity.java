@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.*;
 import android.util.Log;
@@ -57,6 +58,7 @@ public class SplashActivity extends Activity {
         rl_root = findViewById(R.id.rl_root);
         config = getSharedPreferences("config",MODE_PRIVATE);
         boolean isAutoUpdate = config.getBoolean(MyConstants.IS_AUTO_UPDATE,false);
+        installShortcut();
         copyDB();
         if(isAutoUpdate) {
             checkUpdate();
@@ -68,6 +70,30 @@ public class SplashActivity extends Activity {
         AlphaAnimation animation = new AlphaAnimation(0.2f,1.0f);
         animation.setDuration(1000);
         rl_root.setAnimation(animation);
+    }
+
+    /**
+     * 安装快捷方式
+     */
+    private void installShortcut() {
+        boolean isShortcutCreated = config.getBoolean(MyConstants.IS_SHORTCUT_CREATED,false);
+        if(isShortcutCreated)return;
+        Intent intent = new Intent();
+        intent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+        intent.putExtra(Intent.EXTRA_SHORTCUT_NAME,"手机卫士");
+        intent.putExtra("duplicate", false);//不允许重复
+        Intent.ShortcutIconResource iconRes = Intent.ShortcutIconResource.fromContext(this, R.drawable.ic_launcher);
+        intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconRes);
+        Intent shortcutIntent = new Intent();
+        shortcutIntent.setAction(Intent.ACTION_MAIN);
+        shortcutIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        shortcutIntent.setClassName(getPackageName(),this.getClass().getName());
+        intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT,shortcutIntent);
+        sendBroadcast(intent);
+        SharedPreferences.Editor editor = config.edit();
+        editor.putBoolean(MyConstants.IS_SHORTCUT_CREATED,true);
+        editor.commit();
+        Toast.makeText(this,"快捷方式创建",Toast.LENGTH_SHORT).show();
     }
 
     private void copyDB(){

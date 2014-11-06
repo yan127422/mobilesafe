@@ -21,4 +21,28 @@
               android:gravity="center_vertical"
               android:background="@drawable/item_gray"
             />
+    <TextView android:onClick="backupSms"
+              android:clickable="true"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="短信备份"
+              android:textSize="18sp"
+              android:textColor="#000"
+              android:layout_marginTop="5dp"
+              android:drawableLeft="@android:drawable/ic_menu_upload"
+              android:gravity="center_vertical"
+              android:background="@drawable/item_gray"
+            />
+    <TextView android:clickable="true"
+              android:onClick="restoreSms"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="短信还原"
+              android:textSize="18sp"
+              android:textColor="#000"
+              android:layout_marginTop="5dp"
+              android:drawableLeft="@android:drawable/ic_menu_recent_history"
+              android:gravity="center_vertical"
+              android:background="@drawable/item_gray"
+            />
 </LinearLayout>

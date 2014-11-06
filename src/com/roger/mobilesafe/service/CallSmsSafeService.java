@@ -6,7 +6,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.ContentObserver;
+import android.net.Uri;
+import android.os.Handler;
 import android.os.IBinder;
+import android.provider.CallLog;
 import android.telephony.PhoneStateListener;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
@@ -19,6 +23,7 @@ import com.roger.mobilesafe.domain.BlacklistInfo;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.URI;
 
 /**
  * Created by Roger on 2014/10/30.
@@ -28,6 +33,7 @@ public class CallSmsSafeService extends Service{
     private BlacklistDao dao;
     private TelephonyManager tm;
     private MyListenerPhone listenerPhone;
+    private ContentObserver contentObserver;
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -69,11 +75,40 @@ public class CallSmsSafeService extends Service{
                 case TelephonyManager.CALL_STATE_RINGING:
                     BlacklistInfo info = dao.findByNumber(incomingNumber);
                     if(info.isCallSafe()){
+                        Uri uri = CallLog.Calls.CONTENT_URI;
+                        contentObserver = new CallLogObserver(incomingNumber,new Handler());
+                        getContentResolver().registerContentObserver(uri,true,contentObserver);
                         endCall();
                     }
                     break;
             }
         }
+    }
+
+    private class CallLogObserver extends ContentObserver{
+        private String number;
+
+        public CallLogObserver(String incomingNumber,Handler handler) {
+            super(handler);
+            this.number = incomingNumber;
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            Log.i(TAG,"呼叫记录发生变化:"+this.number);
+            getContentResolver().unregisterContentObserver(this);
+            deleteCallLog(number);
+            super.onChange(selfChange);
+        }
+    }
+
+    /**
+     * 删除呼叫记录
+     * @param number
+     */
+    private void deleteCallLog(String number) {
+        Uri uri = CallLog.Calls.CONTENT_URI;
+        getContentResolver().delete(uri,"number=? ",new String[]{number});
     }
 
     /**
@@ -97,6 +132,7 @@ public class CallSmsSafeService extends Service{
     public void onDestroy() {
         unregisterReceiver(smsReceiver);
         smsReceiver = null;
+        tm.listen(listenerPhone,PhoneStateListener.LISTEN_NONE);
         super.onDestroy();
     }
 }
