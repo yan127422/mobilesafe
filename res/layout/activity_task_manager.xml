@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:background="#fff"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <TextView style="@style/mainTitle"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:text="进程管理"
+            />
+    <LinearLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:orientation="vertical"
+            >
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textColor="#000"
+                  android:textSize="15sp"
+                  android:text="运行中的进程："
+                  android:id="@+id/tv_processCount"
+                />
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textColor="#000"
+                  android:textSize="15sp"
+                  android:text="内存使用："
+                  android:id="@+id/tv_memory"
+                />
+    </LinearLayout>
+    <FrameLayout android:layout_width="match_parent"
+                 android:layout_weight="1"
+                 android:layout_height="0dp">
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:gravity="center"
+                      android:id="@+id/ll_loading"
+                      android:visibility="invisible"
+                >
+            <ProgressBar android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                    />
+            <TextView android:layout_marginLeft="5dp"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="正在加载应用列表"
+                      android:textSize="16sp"
+                      android:textColor="#808080"
+                    />
+        </LinearLayout>
+        <ListView android:id="@+id/lv_tasks"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:overScrollMode="never"
+               />
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:background="#f888"
+                  android:textColor="#fff"
+                  android:text="用户程序"
+                  android:id="@+id/tv_tasksInfo"
+                />
+    </FrameLayout>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+        <Button android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="全选"
+                style="@style/button_style1"
+                android:onClick="selectAll"
+                />
+        <Button android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="反选"
+                style="@style/button_style1"
+                android:layout_marginLeft="5dp"
+                android:onClick="selectOp"
+                />
+        <Button android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="清理"
+                style="@style/button_style1"
+                android:layout_marginLeft="5dp"
+                android:onClick="clearMem"
+                />
+        <Button android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="设置"
+                style="@style/button_style1"
+                android:layout_marginLeft="5dp"
+                android:onClick="setup"
+                />
+    </LinearLayout>
+</LinearLayout>

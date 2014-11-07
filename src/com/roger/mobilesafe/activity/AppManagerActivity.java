@@ -285,7 +285,7 @@ public class AppManagerActivity extends Activity{
                 holder.tv_location = (TextView) view.findViewById(R.id.tv_appLocation);
                 view.setTag(holder);
             }
-            holder.iv_icon.setBackground(info.getIcon());
+            holder.iv_icon.setBackgroundDrawable(info.getIcon());
             holder.tv_name.setText(info.getName());
             holder.tv_location.setText(info.isRom()?"手机内存":"外部存储");
             return view;
