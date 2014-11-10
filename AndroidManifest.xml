@@ -54,6 +54,7 @@
         <activity android:name=".activity.CallSmsSafeActivity"/>
         <activity android:name=".activity.AppManagerActivity"/>
         <activity android:name=".activity.TaskManagerActivity"/>
+        <activity android:name=".activity.TaskSettingActivity"/>
         <receiver android:name=".receiver.BootCompleteReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
@@ -75,8 +76,24 @@
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".receiver.MyWidget" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                    android:name="android.appwidget.provider"
+                    android:resource="@xml/process_widget_provider" />
+        </receiver>
+        <receiver android:name=".receiver.KillAllReceiver">
+            <intent-filter>
+                <action android:name="com.roger.mobilesafe.killall"/>
+            </intent-filter>
+        </receiver>
         <service android:name=".service.GpsService"/>
         <service android:name=".service.AddressService"/>
         <service android:name=".service.CallSmsSafeService"/>
+        <service android:name=".service.AutoCleanService"/>
+        <service android:name=".service.UpdateWidgetService"/>
     </application>
 </manifest>

@@ -21,7 +21,7 @@ public class BootCompleteReceiver extends BroadcastReceiver{
     public void onReceive(Context context, Intent intent) {
         //对比Sim卡信息
         config = context.getSharedPreferences("config",Context.MODE_PRIVATE);
-        String savedSim = config.getString(MyConstants.SIM_SERIAL_NUMBER,"")+"-";
+        String savedSim = config.getString(MyConstants.SIM_SERIAL_NUMBER,"");
         tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         String realSim = tm.getSimSerialNumber();
         Log.e(TAG,realSim);

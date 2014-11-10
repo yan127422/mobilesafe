@@ -2,6 +2,8 @@ package com.roger.mobilesafe.activity;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.format.Formatter;
@@ -14,6 +16,7 @@ import com.roger.mobilesafe.domain.AppInfo;
 import com.roger.mobilesafe.domain.TaskInfo;
 import com.roger.mobilesafe.engine.AppInfoEngine;
 import com.roger.mobilesafe.engine.TaskInfoEngine;
+import com.roger.mobilesafe.utils.MyConstants;
 import com.roger.mobilesafe.utils.SystemInfoUtil;
 
 import java.util.ArrayList;
@@ -31,9 +34,11 @@ public class TaskManagerActivity extends Activity{
     private List<TaskInfo> sysTasks = new ArrayList<TaskInfo>();
     private TaskInfoAdapter adapter = new TaskInfoAdapter();
     private String availMem,totalMem;
+    private SharedPreferences config;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        config = getSharedPreferences("config",MODE_PRIVATE);
         setContentView(R.layout.activity_task_manager);
         tv_processCount = (TextView) findViewById(R.id.tv_processCount);
         tv_memory = (TextView) findViewById(R.id.tv_memory);
@@ -113,8 +118,16 @@ public class TaskManagerActivity extends Activity{
      * @param v
      */
     public void setup(View v){
-
+        Intent intent = new Intent(this,TaskSettingActivity.class);
+        startActivityForResult(intent,0);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        adapter.notifyDataSetChanged();
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     /**
      * 初始化ListView、添加适配器、点击事件
      */
@@ -193,7 +206,8 @@ public class TaskManagerActivity extends Activity{
 
         @Override
         public int getCount() {
-            return userTasks.size()+sysTasks.size()+2;
+            int size = config.getBoolean(MyConstants.IS_SHOW_SYSTEM_TASK,false)?sysTasks.size()+1:0;
+            return userTasks.size()+size+1;
         }
 
         @Override

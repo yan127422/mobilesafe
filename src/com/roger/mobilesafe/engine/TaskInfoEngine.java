@@ -16,6 +16,7 @@ import java.util.List;
  * 进程信息获取
  */
 public class TaskInfoEngine {
+
     public static List<TaskInfo> getTaskInfos(Context context){
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         PackageManager pm = context.getPackageManager();
@@ -37,7 +38,7 @@ public class TaskInfoEngine {
                 taskInfo.setName(name);
                 taskInfo.setSystem(isSystem);
             } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
+//                e.printStackTrace();
                 taskInfo.setName(packName);
                 taskInfo.setIcon(context.getResources().getDrawable(R.drawable.ic_default));
                 taskInfo.setSystem(true);
