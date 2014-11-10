@@ -1,10 +1,10 @@
 package com.roger.mobilesafe.service;
 
+import android.app.ActivityManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
-import android.content.Intent;
+import android.content.*;
 import android.os.IBinder;
 import android.text.format.Formatter;
 import android.util.Log;
@@ -14,6 +14,7 @@ import com.roger.mobilesafe.engine.TaskInfoEngine;
 import com.roger.mobilesafe.receiver.MyWidget;
 import com.roger.mobilesafe.utils.SystemInfoUtil;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -25,6 +26,7 @@ public class UpdateWidgetService extends Service {
     private Timer timer;
     private TimerTask task;
     private AppWidgetManager awm;
+    private BroadcastReceiver screenOff,screenOn;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -34,8 +36,18 @@ public class UpdateWidgetService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        timer = new Timer();
         awm = AppWidgetManager.getInstance(this);
+        startTimer();
+        screenOff = new ScreenOffReceiver();
+        screenOn = new ScreenOnReceiver();
+
+        registerReceiver(screenOff,new IntentFilter(Intent.ACTION_SCREEN_OFF));
+        registerReceiver(screenOn,new IntentFilter(Intent.ACTION_SCREEN_ON));
+    }
+
+    private void startTimer() {
+        if(timer!=null||task!=null)return;
+        timer = new Timer();
         task = new TimerTask() {
             @Override
             public void run() {
@@ -56,5 +68,39 @@ public class UpdateWidgetService extends Service {
             }
         };
         timer.schedule(task, 0, 3000);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(screenOff);
+        unregisterReceiver(screenOn);
+        screenOff = null;
+        screenOn = null;
+        stopTimer();
+    }
+
+    private void stopTimer() {
+        if(timer!=null&&task!=null){
+            timer.cancel();
+            task.cancel();
+            timer = null;
+            task = null;
+        }
+    }
+
+    private class ScreenOffReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.i(TAG,"屏幕锁屏...");
+            stopTimer();
+        }
+    }
+    private class ScreenOnReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.i(TAG,"屏幕解锁...");
+            startTimer();
+        }
     }
 }
