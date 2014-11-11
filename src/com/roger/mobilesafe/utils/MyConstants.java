@@ -1,5 +1,7 @@
 package com.roger.mobilesafe.utils;
 
+import android.content.IntentFilter;
+
 /**
  * Created by Roger on 2014/10/9.
  */
@@ -16,4 +18,5 @@ public class MyConstants {
     public static final String IS_SHOW_SYSTEM_TASK = "isShowSystemTask";//进程管理是否显示系统进程
     public static final String BROADCAST_TEMP_STOP = "com.roger.mobilesafe.tempstop";//暂时停止程序锁广播
     public static final String PACK_NAME = "packName";//应用程序包名
+    public static final String BROADCAST_APP_LOCK_CHANGED = "com.roger.mobilesafe.appLockChanged";//程序锁列表改变广播
 }

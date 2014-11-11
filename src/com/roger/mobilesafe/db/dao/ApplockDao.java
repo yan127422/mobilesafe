@@ -2,9 +2,14 @@ package com.roger.mobilesafe.db.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.roger.mobilesafe.db.ApplockDBHelper;
+import com.roger.mobilesafe.utils.MyConstants;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Roger on 2014/11/11.
@@ -13,9 +18,11 @@ import com.roger.mobilesafe.db.ApplockDBHelper;
 public class ApplockDao {
     private static final String TABLE_NAME = "applock";
     private ApplockDBHelper helper;
+    private Context context;
 
     public ApplockDao(Context context){
         helper = new ApplockDBHelper(context);
+        this.context = context;
     }
 
     /**
@@ -27,6 +34,9 @@ public class ApplockDao {
         values.put("packname",packname);
         database.insert(TABLE_NAME,null,values);
         database.close();
+        Intent intent = new Intent();
+        intent.setAction(MyConstants.BROADCAST_APP_LOCK_CHANGED);
+        context.sendBroadcast(intent);
     }
 
     /**
@@ -37,6 +47,9 @@ public class ApplockDao {
         SQLiteDatabase db = helper.getWritableDatabase();
         db.delete(TABLE_NAME,"packname=?",new String[]{packname});
         db.close();
+        Intent intent = new Intent();
+        intent.setAction(MyConstants.BROADCAST_APP_LOCK_CHANGED);
+        context.sendBroadcast(intent);
     }
 
     /**
@@ -54,5 +67,17 @@ public class ApplockDao {
         cursor.close();
         db.close();
         return result;
+    }
+
+    public List<String> findAll(){
+        List<String>packnames = new ArrayList<String>();
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_NAME, new String[]{"packname"}, null, null, null, null, null);
+        while (cursor.moveToNext()){
+            packnames.add(cursor.getString(0));
+        }
+        cursor.close();
+        db.close();
+        return packnames;
     }
 }
