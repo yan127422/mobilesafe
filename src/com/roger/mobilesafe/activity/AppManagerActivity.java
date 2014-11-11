@@ -20,6 +20,7 @@ import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
 import android.widget.*;
 import com.roger.mobilesafe.R;
+import com.roger.mobilesafe.db.dao.ApplockDao;
 import com.roger.mobilesafe.domain.AppInfo;
 import com.roger.mobilesafe.engine.AppInfoEngine;
 import com.roger.mobilesafe.utils.DensityUtil;
@@ -40,10 +41,12 @@ public class AppManagerActivity extends Activity{
     private BaseAdapter adapter;
     private PopupWindow popupWindow;
     private AppInfo appInfo;//当前选中App信息
+    private ApplockDao applockDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_manager);
+        applockDao = new ApplockDao(this);
         tv_rom_avail = (TextView) findViewById(R.id.tv_rom_avail);
         tv_sd_avail = (TextView) findViewById(R.id.tv_sd_avail);
         tv_apps = (TextView) findViewById(R.id.tv_apps);
@@ -112,6 +115,27 @@ public class AppManagerActivity extends Activity{
                 animationSet.addAnimation(scaleAnimation);
                 animationSet.addAnimation(alphaAnimation);
                 contentView.startAnimation(animationSet);
+            }
+        });
+
+        lv_apps.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                if(position==0||position==userApps.size()+1)return true;
+                if(position>userApps.size()+1){
+                    position = position-userApps.size()-2;
+                    appInfo = systemApps.get(position);
+                }else{
+                    appInfo = userApps.get(--position);
+                }
+                String packName = appInfo.getPackName();
+                if(applockDao.find(packName)){
+                    applockDao.delete(packName);
+                }else{
+                    applockDao.add(packName);
+                }
+                adapter.notifyDataSetChanged();
+                return true;
             }
         });
     }
@@ -283,11 +307,14 @@ public class AppManagerActivity extends Activity{
                 holder.iv_icon = (ImageView) view.findViewById(R.id.iv_icon);
                 holder.tv_name = (TextView) view.findViewById(R.id.tv_appName);
                 holder.tv_location = (TextView) view.findViewById(R.id.tv_appLocation);
+                holder.iv_status = (ImageView) view.findViewById(R.id.iv_status);
                 view.setTag(holder);
             }
             holder.iv_icon.setBackgroundDrawable(info.getIcon());
             holder.tv_name.setText(info.getName());
             holder.tv_location.setText(info.isRom()?"手机内存":"外部存储");
+            int resId = applockDao.find(info.getPackName())?R.drawable.lock:R.drawable.unlock;
+            holder.iv_status.setImageResource(resId);
             return view;
         }
 
@@ -305,7 +332,7 @@ public class AppManagerActivity extends Activity{
 
     static class ViewHolder{
         TextView tv_name,tv_location;
-        ImageView iv_icon;
+        ImageView iv_icon,iv_status;
     }
     /**
      * 将应用分成用户和系统应用

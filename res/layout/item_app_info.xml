@@ -35,4 +35,12 @@
             android:layout_marginTop="5dp"
             android:id="@+id/tv_appLocation"
             />
+    <ImageView android:layout_width="30dp"
+               android:layout_height="30dp"
+               android:layout_centerVertical="true"
+               android:layout_alignParentRight="true"
+               android:layout_marginRight="5dp"
+               android:src="@drawable/lock"
+               android:id="@+id/iv_status"
+            />
 </RelativeLayout>
