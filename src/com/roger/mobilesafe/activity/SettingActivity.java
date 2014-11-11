@@ -9,6 +9,7 @@ import android.view.View;
 import com.roger.mobilesafe.R;
 import com.roger.mobilesafe.service.AddressService;
 import com.roger.mobilesafe.service.CallSmsSafeService;
+import com.roger.mobilesafe.service.WatchDogService;
 import com.roger.mobilesafe.ui.SettingItemView;
 import com.roger.mobilesafe.utils.MyConstants;
 import com.roger.mobilesafe.utils.ServiceUtils;
@@ -18,7 +19,7 @@ import com.roger.mobilesafe.utils.ServiceUtils;
  */
 public class SettingActivity extends Activity{
     private static final String TAG = "SettingActivity";
-    private SettingItemView autoUpdate,addressQuery,callSms;
+    private SettingItemView autoUpdate,addressQuery,callSms,siv_setting_watchDog;
     private SharedPreferences config;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +30,10 @@ public class SettingActivity extends Activity{
         autoUpdate = (SettingItemView) findViewById(R.id.siv_setting_update);
         addressQuery = (SettingItemView) findViewById(R.id.siv_setting_address);
         callSms = (SettingItemView) findViewById(R.id.siv_setting_callSms);
+        siv_setting_watchDog = (SettingItemView) findViewById(R.id.siv_setting_watchDog);
         addressQuery.setText("设置显示号码归属地");
         callSms.setText("开启黑名单拦截");
+        siv_setting_watchDog.setText("开启程序锁服务");
         autoUpdate.setChecked(isAuto);
         autoUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +74,22 @@ public class SettingActivity extends Activity{
                     startService(callSmsService);
                 }else{
                     stopService(callSmsService);
+                }
+            }
+        });
+
+        boolean isWatchDogRunning = ServiceUtils.isServiceRunning(this, WatchDogService.class.getName());
+        siv_setting_watchDog.setChecked(isWatchDogRunning);
+        final Intent watchDogService = new Intent(this,WatchDogService.class);
+        siv_setting_watchDog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isChecked = !siv_setting_watchDog.isChecked();
+                siv_setting_watchDog.setChecked(isChecked);
+                if(isChecked){
+                    startService(watchDogService);
+                }else{
+                    stopService(watchDogService);
                 }
             }
         });

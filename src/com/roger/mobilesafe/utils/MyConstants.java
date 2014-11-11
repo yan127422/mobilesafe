@@ -14,4 +14,6 @@ public class MyConstants {
     public static final String IS_SHOW_ADDRESS = "isShowAddress";//号码归属地开启
     public static final String IS_SHORTCUT_CREATED = "isShortcutCreated";//快捷方式是否创建
     public static final String IS_SHOW_SYSTEM_TASK = "isShowSystemTask";//进程管理是否显示系统进程
+    public static final String BROADCAST_TEMP_STOP = "com.roger.mobilesafe.tempstop";//暂时停止程序锁广播
+    public static final String PACK_NAME = "packName";//应用程序包名
 }
