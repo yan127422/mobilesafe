@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res/com.roger.mobilesafe"
+              android:orientation="vertical"
+              android:background="#fff"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+
+        >
+    <TextView style="@style/mainTitle"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:text="清理缓存"
+            />
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+        <FrameLayout android:layout_width="80dp"
+                     android:layout_height="80dp"
+                     android:padding="5dp"
+                >
+            <com.roger.mobilesafe.ui.HoloCircularProgressBar
+                    android:id="@+id/hcp_progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:marker_progress="0.3"
+                    app:stroke_width="2dp"
+                    app:progress="0.0" />
+            <TextView android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:text="开始"
+                      android:gravity="center"
+                      android:textSize="18sp"
+                      android:id="@+id/tv_progress"
+                      android:textColor="@color/textcolor_black2red"
+                    />
+        </FrameLayout>
+        <TextView android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:layout_weight="1"
+                  android:gravity="center_vertical"
+                  android:text="正在扫描..."
+                  android:textSize="16sp"
+                  android:layout_marginLeft="10dp"
+                  android:id="@+id/tv_scanning"
+                />
+    </LinearLayout>
+    <ScrollView android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+            >
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/ll_container"
+                      android:orientation="vertical"
+                >
+
+        </LinearLayout>
+    </ScrollView>
+    <Button android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/button_style1"
+            android:text="一 键 清 理"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:onClick="clearAll"
+            />
+</LinearLayout>

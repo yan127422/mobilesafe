@@ -103,11 +103,6 @@ public class AntiVirusActivity extends Activity{
                     scanInfo.setName(info.applicationInfo.loadLabel(pm).toString());
                     message.obj = scanInfo;
                     scanHandler.sendMessage(message);
-                    try {
-                        Thread.sleep(50);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
                 }
                 Message message = Message.obtain();
                 message.what = FINISH;
