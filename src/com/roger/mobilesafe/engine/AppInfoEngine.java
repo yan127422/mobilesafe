@@ -29,6 +29,7 @@ public class AppInfoEngine {
             info.setName(pi.applicationInfo.loadLabel(pm).toString());
             info.setRom((pi.applicationInfo.flags & ApplicationInfo.FLAG_EXTERNAL_STORAGE)!=1);
             info.setSystem((pi.applicationInfo.flags&ApplicationInfo.FLAG_SYSTEM)==1);
+            info.setUid(pi.applicationInfo.uid);
             infos.add(info);
         }
         return infos;

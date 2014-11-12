@@ -12,6 +12,7 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
         <item name="android:windowNoTitle">true</item>
+        <item name="circularProgressBarStyle">@style/CircularProgressBarLight</item>
     </style>
     <style name="mainTitle">
         <item name="android:textSize">22sp</item>
@@ -51,4 +52,5 @@
         <item name="android:paddingLeft">5dp</item>
         <item name="android:paddingRight">5dp</item>
     </style>
+
 </resources>

@@ -11,6 +11,15 @@ public class AppInfo {
     private String packName;
     private boolean isRom;//是否安装在手机内部（而不是SD卡上）
     private boolean isSystem;//是否系统应用
+    private int uid;//用户id
+
+    public int getUid() {
+        return uid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
+    }
 
     public Drawable getIcon() {
         return icon;

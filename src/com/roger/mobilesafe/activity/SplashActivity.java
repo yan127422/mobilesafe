@@ -59,7 +59,7 @@ public class SplashActivity extends Activity {
         config = getSharedPreferences("config",MODE_PRIVATE);
         boolean isAutoUpdate = config.getBoolean(MyConstants.IS_AUTO_UPDATE,false);
         installShortcut();
-        copyDB();
+        copyDB("address.db");copyDB("antivirus.db");
         if(isAutoUpdate) {
             checkUpdate();
         }else{
@@ -96,12 +96,12 @@ public class SplashActivity extends Activity {
         Toast.makeText(this,"快捷方式创建",Toast.LENGTH_SHORT).show();
     }
 
-    private void copyDB(){
+    private void copyDB(String fileName){
         try {
-            InputStream is = getAssets().open("address.db");
-            File file = new File(getFilesDir(),"address.db");
+            InputStream is = getAssets().open(fileName);
+            File file = new File(getFilesDir(),fileName);
             if(file.exists()&&file.length()>0){
-                Log.i(TAG,"文件已存在");
+                Log.i(TAG,fileName+"文件已存在");
                 return;
             }
             FileOutputStream fos = new FileOutputStream(file);

@@ -71,8 +71,12 @@ public class HomeActivity extends Activity{
                         intent = new Intent(HomeActivity.this,AppManagerActivity.class);
                         startActivity(intent);
                         break;
-                    case 3:
+                    case 3://进程管理
                         intent = new Intent(HomeActivity.this,TaskManagerActivity.class);
+                        startActivity(intent);
+                        break;
+                    case 5://杀毒
+                        intent = new Intent(HomeActivity.this,AntiVirusActivity.class);
                         startActivity(intent);
                         break;
                     case 7://高级工具
