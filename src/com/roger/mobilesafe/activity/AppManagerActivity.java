@@ -53,8 +53,8 @@ public class AppManagerActivity extends Activity{
         lv_apps = (ListView) findViewById(R.id.lv_apps);
         ll_loading = (LinearLayout) findViewById(R.id.ll_loading);
 
-        String sdPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-        String romPath = Environment.getDataDirectory().getAbsolutePath();
+        String sdPath = Environment.getExternalStorageDirectory().getPath();
+        String romPath = Environment.getDataDirectory().getPath();
         String availRom = Formatter.formatFileSize(this,getAvaibleSpace(romPath))+"/"+Formatter.formatFileSize(this,getTotalSpace(romPath));
         String avaiblSd = Formatter.formatFileSize(this,getAvaibleSpace(sdPath))+"/"+Formatter.formatFileSize(this,getTotalSpace(sdPath));
         tv_rom_avail.setText("内存可用："+availRom);
@@ -357,7 +357,8 @@ public class AppManagerActivity extends Activity{
      */
     private long getAvaibleSpace(String path){
         StatFs statFs = new StatFs(path);
-        return statFs.getAvailableBlocks()*statFs.getBlockSize();
+        long result = ((long)statFs.getAvailableBlocks())*((long)statFs.getBlockSize());
+        return result;
     }
 
     /**
@@ -367,6 +368,7 @@ public class AppManagerActivity extends Activity{
      */
     private long getTotalSpace(String path){
         StatFs statFs = new StatFs(path);
-        return statFs.getBlockCount()*statFs.getBlockSize();
+        long result =  ((long)statFs.getBlockCount())*((long)statFs.getBlockSize());
+        return result;
     }
 }
