@@ -9,6 +9,7 @@ import android.view.View;
 import com.roger.mobilesafe.R;
 import com.roger.mobilesafe.service.AddressService;
 import com.roger.mobilesafe.service.CallSmsSafeService;
+import com.roger.mobilesafe.service.TrafficService;
 import com.roger.mobilesafe.service.WatchDogService;
 import com.roger.mobilesafe.ui.SettingItemView;
 import com.roger.mobilesafe.utils.MyConstants;
@@ -19,7 +20,11 @@ import com.roger.mobilesafe.utils.ServiceUtils;
  */
 public class SettingActivity extends Activity{
     private static final String TAG = "SettingActivity";
-    private SettingItemView autoUpdate,addressQuery,callSms,siv_setting_watchDog;
+    private SettingItemView autoUpdate,
+                            addressQuery,
+                            callSms,
+                            siv_setting_watchDog,
+                            siv_traffic;//流量统计服务
     private SharedPreferences config;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +36,8 @@ public class SettingActivity extends Activity{
         addressQuery = (SettingItemView) findViewById(R.id.siv_setting_address);
         callSms = (SettingItemView) findViewById(R.id.siv_setting_callSms);
         siv_setting_watchDog = (SettingItemView) findViewById(R.id.siv_setting_watchDog);
+        siv_traffic = (SettingItemView) findViewById(R.id.siv_traffic);
+        siv_traffic.setText("开启流量统计");
         addressQuery.setText("设置显示号码归属地");
         callSms.setText("开启黑名单拦截");
         siv_setting_watchDog.setText("开启程序锁服务");
@@ -90,6 +97,22 @@ public class SettingActivity extends Activity{
                     startService(watchDogService);
                 }else{
                     stopService(watchDogService);
+                }
+            }
+        });
+
+        boolean isTraffic = ServiceUtils.isServiceRunning(this, TrafficService.class.getName());
+        final Intent trafficService = new Intent(this,TrafficService.class);
+        siv_traffic.setChecked(isTraffic);
+        siv_traffic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isChecked = !siv_traffic.isChecked();
+                siv_traffic.setChecked(isChecked);
+                if(isChecked){
+                    startService(trafficService);
+                }else{
+                    stopService(trafficService);
                 }
             }
         });

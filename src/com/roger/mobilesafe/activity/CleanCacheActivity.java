@@ -16,6 +16,7 @@ import com.roger.mobilesafe.R;
 import com.roger.mobilesafe.domain.ScanInfo;
 import com.roger.mobilesafe.ui.HoloCircularProgressBar;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -172,6 +173,7 @@ public class CleanCacheActivity extends Activity{
             scanInfo.setPackName(pStats.packageName);
             scanInfo.setName(packageInfo.applicationInfo.loadLabel(pm).toString());
             scanInfo.setIcon(packageInfo.applicationInfo.loadIcon(pm));
+
             message.obj = scanInfo;
             n++;
             handler.sendMessage(message);
@@ -189,17 +191,18 @@ public class CleanCacheActivity extends Activity{
      */
     public void clearAll(View v){
         try {
-            freeStorageAndNotifyMethod.invoke(pm,Integer.MAX_VALUE,new MyPackageDataObserver());
+            long size = 1024L*1024*1024*50;
+            Log.i(TAG,"clearAll:"+Formatter.formatFileSize(this,size));
+            freeStorageAndNotifyMethod.invoke(pm,size,new MyPackageDataObserver());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private class MyPackageDataObserver extends IPackageDataObserver.Stub{
-
         @Override
         public void onRemoveCompleted(String packageName, boolean succeeded) throws RemoteException {
-
+            Log.i(TAG,"removeCompleted:"+packageName+","+succeeded);
         }
     }
 }
