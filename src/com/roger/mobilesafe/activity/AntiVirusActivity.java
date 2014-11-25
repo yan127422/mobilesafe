@@ -25,7 +25,7 @@ import java.util.List;
  * Created by Roger on 2014/11/12.
  * 手机杀毒
  */
-public class AntiVirusActivity extends Activity{
+public class AntiVirusActivity extends BaseActivity{
     private static final int SCANNING = 0;//正在扫描
     private static final int FINISH = 1;//扫描完成
     private HoloCircularProgressBar hcp_progerss;

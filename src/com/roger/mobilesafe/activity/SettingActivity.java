@@ -18,7 +18,7 @@ import com.roger.mobilesafe.utils.ServiceUtils;
 /**
  * Created by Roger on 2014/10/9.
  */
-public class SettingActivity extends Activity{
+public class SettingActivity extends BaseActivity{
     private static final String TAG = "SettingActivity";
     private SettingItemView autoUpdate,
                             addressQuery,

@@ -15,7 +15,7 @@ import com.roger.mobilesafe.utils.SmsUtils;
 /**
  * Created by Roger on 2014/10/23.
  */
-public class AtoolsActivity extends Activity{
+public class AtoolsActivity extends BaseActivity{
     private static final int SUCCESS = 0;
     private static final int FAILURE = 1;
     private static final int START = 2;

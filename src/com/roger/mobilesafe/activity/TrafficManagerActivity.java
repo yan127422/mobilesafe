@@ -24,7 +24,7 @@ import java.util.List;
  * Created by Roger on 2014/11/11.
  * 流量管理
  */
-public class TrafficManagerActivity extends Activity{
+public class TrafficManagerActivity extends BaseActivity{
     private static final String TAG = "AppManagerActivity";
     private TextView tv_totalTraffic,tv_apps;
     private LinearLayout ll_loading;

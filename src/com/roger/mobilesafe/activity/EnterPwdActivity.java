@@ -16,7 +16,7 @@ import com.roger.mobilesafe.utils.MyConstants;
  * Created by Roger on 2014/11/11.
  * 程序锁：输入密码界面
  */
-public class EnterPwdActivity extends Activity{
+public class EnterPwdActivity extends BaseActivity{
     private EditText et_password;
     private TextView tv_packName;
     private ImageView iv_icon;

@@ -25,7 +25,7 @@ import java.util.List;
  * Created by Roger on 2014/11/12.
  * 清理缓存
  */
-public class CleanCacheActivity extends Activity{
+public class CleanCacheActivity extends BaseActivity{
     private static final int SCANNING = 0;//正在扫描
     private static final int FINISH = 1;//扫描完成
     private static final int ERROR = 2;

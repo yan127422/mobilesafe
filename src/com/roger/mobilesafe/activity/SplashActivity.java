@@ -34,7 +34,7 @@ import java.net.URL;
 /**
  * 引导界面
  */
-public class SplashActivity extends Activity {
+public class SplashActivity extends BaseActivity {
     private static final String TAG = "SplashActivity";
     private static final int ENTER_HOME = 0;
     private static final int SHOW_UPDATE_DIALOG = 1;

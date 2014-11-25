@@ -13,7 +13,7 @@ import com.roger.mobilesafe.R;
 /**
  * Created by Roger on 2014/10/15.
  */
-public  abstract class BaseSettingActivity extends Activity{
+public  abstract class BaseSettingActivity extends BaseActivity{
     private static final String TAG = "BaseSettingActivity";
     protected GestureDetector detector;
     protected SharedPreferences config;

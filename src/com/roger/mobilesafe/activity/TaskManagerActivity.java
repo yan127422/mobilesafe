@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * 进程管理
  */
-public class TaskManagerActivity extends Activity{
+public class TaskManagerActivity extends BaseActivity{
     private static final String TAG = "TaskManagerActivity";
     private TextView tv_processCount,tv_memory,tv_tasksInfo;
     private LinearLayout ll_loading;

@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * Created by Roger on 2014/11/4.
  */
-public class AppManagerActivity extends Activity{
+public class AppManagerActivity extends BaseActivity{
     private static final String TAG = "AppManagerActivity";
     private TextView tv_rom_avail,tv_sd_avail,tv_apps;
     private LinearLayout ll_loading;

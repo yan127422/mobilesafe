@@ -18,7 +18,7 @@ import com.roger.mobilesafe.db.dao.NumberAddressUtils;
 /**
  * Created by Roger on 2014/10/23.
  */
-public class NumberAddressQueryActivity extends Activity{
+public class NumberAddressQueryActivity extends BaseActivity{
     private EditText et_number;
     private TextView tv_address;
     private Vibrator vibrator;

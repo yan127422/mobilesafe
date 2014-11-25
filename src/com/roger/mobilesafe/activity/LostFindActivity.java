@@ -13,7 +13,7 @@ import com.roger.mobilesafe.utils.MyConstants;
 /**
  * Created by Roger on 2014/10/14.
  */
-public class LostFindActivity extends Activity{
+public class LostFindActivity extends BaseActivity{
     private SharedPreferences config;
     private TextView tv_number,tv_enterSetup;
     private ImageView iv_lock;

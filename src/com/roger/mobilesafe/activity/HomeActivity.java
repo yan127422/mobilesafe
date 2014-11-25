@@ -9,12 +9,15 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.*;
 import com.roger.mobilesafe.R;
 import com.roger.mobilesafe.receiver.MyAdminReceiver;
@@ -24,7 +27,7 @@ import com.roger.mobilesafe.utils.MyConstants;
 /**
  * Created by Roger on 2014/10/8.
  */
-public class HomeActivity extends Activity{
+public class HomeActivity extends BaseActivity{
     private static final String TAG = "HomeActivity";
     private GridView gridView;
     private static final String titles[] =
@@ -47,6 +50,7 @@ public class HomeActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         config = getSharedPreferences("config",MODE_PRIVATE);
          dpm = (DevicePolicyManager)getSystemService(DEVICE_POLICY_SERVICE);
         gridView = (GridView) findViewById(R.id.gv_home_gridview);

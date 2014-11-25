@@ -15,7 +15,7 @@ import com.roger.mobilesafe.utils.ServiceUtils;
 /**
  * Created by Roger on 2014/11/7.
  */
-public class TaskSettingActivity extends Activity{
+public class TaskSettingActivity extends BaseActivity{
     private static final String TAG = "TaskSettingActivity";
     private SettingItemView siv_showSystem,siv_autoClean;
     private SharedPreferences config;

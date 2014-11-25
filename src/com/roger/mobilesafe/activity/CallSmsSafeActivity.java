@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by Roger on 2014/10/28.
  */
-public class CallSmsSafeActivity extends Activity{
+public class CallSmsSafeActivity extends BaseActivity{
     private static final String TAG = "CallSmsSafeActivity";
     private ListView lv_blacklist;
     private List<BlacklistInfo> infos;

@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * Created by Roger on 2014/10/18.
  */
-public class ContactSelectActivity extends Activity{
+public class ContactSelectActivity extends BaseActivity{
     private ListView lv_contacts;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
